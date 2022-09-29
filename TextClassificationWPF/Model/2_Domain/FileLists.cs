@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace TextClassificationWPF.Domain
 {
     public class FileLists
     {
-        private List<string> _a;
         private List<string> _b;
+
+        private List<string> _a;
+
 
         public FileLists(){
 
@@ -39,6 +42,5 @@ namespace TextClassificationWPF.Domain
         {
             return _a.Concat(_b).ToList(); ;
         }
-
     }
 }

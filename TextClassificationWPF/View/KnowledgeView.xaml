@@ -17,6 +17,12 @@
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
             <ColumnDefinition Width="10"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -29,41 +35,169 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="5"></RowDefinition>
         </Grid.RowDefinitions>
-        <Label Content="Show Words start with:"
+        
+        <Label Content="Search Word"
                Grid.Row="0"
                Grid.Column="1"
                Grid.ColumnSpan="2"
-               FontSize="20"
+               FontSize="16"
                Background="AliceBlue"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"
                                 BorderBrush="Black"
                  BorderThickness="1"></Label>
+        
         <TextBox x:Name="ShowWordWith"
-                 Text="Dummy Text"
+                 Text="{Binding SerchWord}"
                  Foreground="Red"
                  Background="AliceBlue"
                  VerticalContentAlignment="Center"
                  HorizontalContentAlignment="Center"
                  Grid.Row="0"
                  Grid.Column="3"
-                 FontSize="20"
+                 FontSize="16"
                  BorderBrush="Black"
                  BorderThickness="1"></TextBox>
+
+        <Button Content="Search"
+                Command="{Binding Search}"
+                Grid.Column="4"
+                Background="CornflowerBlue"></Button>
+
+        <Label Content="Training Time"
+               Grid.Row="12"
+               Grid.Column="2"
+               Grid.ColumnSpan="2"
+               FontSize="16"
+               Background="AliceBlue"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+               BorderBrush="Black"
+               BorderThickness="1"></Label>
+       
+        <Label Grid.Row="12"
+               Grid.Column="4"
+               FontSize="16"
+               Background="AliceBlue"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+               BorderBrush="Black"
+               BorderThickness="1"
+               Content="{Binding TrainingTime}"></Label>
         <ListView x:Name="ListOfWords"
                   Grid.Row="1"
-                  Grid.RowSpan="8"
+                  Grid.RowSpan="11"
                   Grid.Column="1"
-                  Grid.ColumnSpan="5"
-                  Background="Aqua"
+                  Grid.ColumnSpan="4"
+                  Background="AliceBlue"
+                  BorderBrush="Black"
+                  BorderThickness="1"
                   ItemsSource="{Binding ListOfWordItems}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Width="400" Header="Word" DisplayMemberBinding="{Binding Word}"></GridViewColumn>
-                    <GridViewColumn Width="200" Header="Occurncy" DisplayMemberBinding="{Binding Occurency}"></GridViewColumn>
+                    <GridViewColumn Width="175"
+                                    Header="Word" 
+                                    DisplayMemberBinding="{Binding Word}"></GridViewColumn>
+                    <GridViewColumn Width="75" 
+                                    Header="Occurency" 
+                                    DisplayMemberBinding="{Binding Occurency}"></GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
+        
+        <Button x:Name="Lern" 
+                Content="Start Lerning"
+                Grid.Column="1" 
+                Grid.Row="12" 
+                Background="CornflowerBlue"
+                Command="{Binding Lerne}"></Button>
+
+        <Label Content="Content ClassA"
+               Grid.Row="0"
+               Grid.Column="6"
+               Grid.ColumnSpan="2"
+               FontSize="16"
+               Background="AliceBlue"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+                                BorderBrush="Black"
+                 BorderThickness="1"></Label>
+        <ListView x:Name="ListOfClassAFiles"
+                  Grid.Row="1"
+                  Grid.RowSpan="11"
+                  Grid.Column="6"
+                  Grid.ColumnSpan="2"
+                  Background="AliceBlue"
+                  BorderBrush="Black"
+                  BorderThickness="1"
+                  ItemsSource="{Binding ListClassA}"
+                  SelectedItem="{Binding Filename}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="135"
+                                    Header="Filename" 
+                                    DisplayMemberBinding="{Binding }"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Label Content="Content ClassB"
+               Grid.Row="0"
+               Grid.Column="9"
+               Grid.ColumnSpan="2"
+               FontSize="16"
+               Background="AliceBlue"
+               HorizontalContentAlignment="Center"
+               VerticalContentAlignment="Center"
+                                BorderBrush="Black"
+                 BorderThickness="1"></Label>
+        <ListView x:Name="ListOfClassBFiles"
+                  Grid.Row="1"
+                  Grid.RowSpan="11"
+                  Grid.Column="9"
+                  Grid.ColumnSpan="2"
+                  Background="AliceBlue"
+                  BorderBrush="Black"
+                  BorderThickness="1"
+                  ItemsSource="{Binding ListClassB}"
+                  SelectedItem="{Binding Filename}">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="BorderBrush" Value="LightGray" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Width="135"
+                                    Header="Filename" 
+                                    DisplayMemberBinding="{Binding }"></GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+        <Button Content="Show tokens of selected file"
+                Grid.Column="7"
+                Grid.ColumnSpan="3"
+                Grid.Row="12" 
+                Background="CornflowerBlue"
+                Command="{Binding Show}"></Button>
     </Grid>
 </Window>
