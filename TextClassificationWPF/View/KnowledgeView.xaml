@@ -54,7 +54,7 @@
                  BorderThickness="1"></Label>
         
         <TextBox x:Name="ShowWordWith"
-                 Text="{Binding SerchWord}"
+                 Text="{Binding SearchWord}"
                  Foreground="Red"
                  Background="AliceBlue"
                  VerticalContentAlignment="Center"
