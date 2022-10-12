@@ -49,7 +49,9 @@ namespace TextClassificationWPF.ViewModel
         public string SearchWord
         {
             get { return searchWord; }
-            set { searchWord = value;
+            set
+            {
+                searchWord = value;
                 PropertyIsChanged();
             }
         }

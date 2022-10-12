@@ -44,15 +44,24 @@ namespace TextClassificationWPF.Business
 
         public static string RemovePunctuation(string token)
         {
+            // Here we trim the spase from the token
             token.Trim();
-            char[] punctuations = { '.', ',', '"', '“', '”','!', '?', '\n', ':' };
+            // here we create a char array of symbols to remove
+            char[] punctuations = { '.', ',', '"', '“', '”', '!', '?', '\n', ':', ';', '(', ')', '\'', '-', '_'
+                                    , '[', ']', '{', '}', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '§'
+                                    , '&', '%', '/', '`', '´', '<', '>', '|', '+', '*', '#', '£', '’'};
+            // Here we create a char array from the token
             char[] tokenChar = token.ToCharArray();
+            // Here we create the token we will be returning
             string returnToken = "";
 
+            // Here in the first for loop we will go througe the symbols to remove
             for (int i = 0; i < punctuations.Length; i++)
             {
                 char symbol = punctuations[i];
 
+                // Here we go througe eache char to see if they mach the symbol
+                // and if they do we replace it with a space
                 for (int y = 0; y < tokenChar.Length; y++)
                 {
                     if (tokenChar[y].Equals(symbol))
@@ -62,9 +71,12 @@ namespace TextClassificationWPF.Business
                 }
             }
 
+            // Here we make the char array to a string, using the string constuctor
             returnToken = new string(tokenChar);
+            // Here we use regex to remove all spaces from the string
             returnToken = Regex.Replace(returnToken, @"\s+", "");
 
+            // Return the finised string
             return returnToken;
         }
     }

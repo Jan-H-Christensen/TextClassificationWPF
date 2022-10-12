@@ -52,7 +52,7 @@
                VerticalContentAlignment="Center"
                                 BorderBrush="Black"
                  BorderThickness="1"></Label>
-        
+
         <TextBox x:Name="ShowWordWith"
                  Text="{Binding SearchWord}"
                  Foreground="Red"
