@@ -18,6 +18,8 @@ namespace TextClassificationWPF.FileIO
 
         public abstract string GetAllTextFromFileB(string fileName);
 
+        public abstract string GetAllTextFromFileUnknown(string fileName);
+
         public string GetFileType()
         {
             return _fileType;

@@ -48,5 +48,12 @@ namespace TextClassificationWPF.FileIO
 
             return text;
         }
+
+        public override string GetAllTextFromFileUnknown(string path)
+        {
+            string text = File.ReadAllText(path);
+
+            return text;
+        }
     }
 }

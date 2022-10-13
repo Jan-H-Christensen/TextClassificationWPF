@@ -19,15 +19,22 @@ namespace TextClassificationWPF.ViewModel
         public AddCommand Search { get; set; }
         public AddCommand Show { get; set; }
         public AddCommand Lerne { get; set; }
+        public AddCommand Classify { get; set; }
 
         private KnowledgeBuilder kb;
         private BagOfWords bagOfWords;
         private Knowledge knowledge;
 
-        private long trainingTime;
-
+        private UnknownText unknownText;
+        //TODO bind to a Textfield in the WPF
+        public UnknownText Unknown
+        {
+            get { return unknownText; }
+            set { unknownText = value;
+                PropertyIsChanged();
+            }
+        }
         private string filename;
-
         public string Filename
         {
             get { return filename; }
@@ -36,6 +43,7 @@ namespace TextClassificationWPF.ViewModel
             }
         }
 
+        private long trainingTime;
         public long TrainingTime
         {
             get { return trainingTime; }
@@ -54,6 +62,14 @@ namespace TextClassificationWPF.ViewModel
                 searchWord = value;
                 PropertyIsChanged();
             }
+        }
+
+        private string classifyedAs;
+        //TODO bind to a label in the WPF
+        public string ClassifyedAs
+        {
+            get { return classifyedAs; }
+            set { classifyedAs = value; }
         }
 
 
@@ -90,6 +106,18 @@ namespace TextClassificationWPF.ViewModel
             }
         }
 
+        private ObservableCollection<string> listUnknown = new ObservableCollection<string>();
+
+        public ObservableCollection<string> ListUnknown
+        {
+            get { return listUnknown; }
+            set
+            {
+                listUnknown = value;
+                PropertyIsChanged();
+            }
+        }
+
         private ObservableCollection<WordItem> listOfWordItems = new ObservableCollection<WordItem>();
         
         public ObservableCollection<WordItem> ListOfWordItems
@@ -113,6 +141,7 @@ namespace TextClassificationWPF.ViewModel
             Show = new AddCommand(GetFileInfo);
             Search = new AddCommand(FindWord);
             Lerne = new AddCommand(StarLerning);
+            Classify = new AddCommand(ClassifyAnUnknownText);
         }
 
         /*
@@ -163,6 +192,12 @@ namespace TextClassificationWPF.ViewModel
             {
                 if (!ListClassB.Contains(StringOperations.getFileName(knowledge.GetFileLists().GetB()[y])))
                     ListClassB.Add(StringOperations.getFileName(knowledge.GetFileLists().GetB()[y]));
+            }
+
+            for (int j = 0; j < knowledge.GetFileLists().GetU().Count; j++)
+            {
+                if (!ListUnknown.Contains(StringOperations.getFileName(knowledge.GetFileLists().GetU()[j])))
+                    ListUnknown.Add(StringOperations.getFileName(knowledge.GetFileLists().GetU()[j]));
             }
 
         }
@@ -236,5 +271,10 @@ namespace TextClassificationWPF.ViewModel
             ListOfWordItems = new ObservableCollection<WordItem>(bagOfWords.GetEntriesInDictionary());
         }
 
+        //should do the magic later maybe some changes in the code behind (KNN class and UnknownTextClass)
+        private void ClassifyAnUnknownText(object parameter)
+        {
+            ClassifyedAs = unknownText.ClassifyUnknownText();
+        }
     }
 }

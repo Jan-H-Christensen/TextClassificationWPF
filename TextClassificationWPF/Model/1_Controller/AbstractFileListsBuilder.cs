@@ -12,6 +12,8 @@ namespace TextClassificationWPF.Controller
         public abstract void GenerateFileNamesInA();
 
         public abstract void GenerateFileNamesInB();
+
+        public abstract void GenerateFileNameInUnknown();
         
         //  get the complete FileLists-object
         public abstract FileLists GetFileLists();

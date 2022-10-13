@@ -108,6 +108,8 @@
     </ApplicationDefinition>
     <Compile Include="Model\AddCommand.cs" />
     <Compile Include="Model\Bindable.cs" />
+    <Compile Include="Model\KNN.cs" />
+    <Compile Include="Model\UnknownText.cs" />
     <Compile Include="ViewModel\KnowledgeViewModel.cs" />
     <Compile Include="View\KnowledgeView.xaml.cs">
       <DependentUpon>KnowledgeView.xaml</DependentUpon>

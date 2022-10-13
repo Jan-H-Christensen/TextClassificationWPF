@@ -14,6 +14,7 @@ namespace TextClassificationWPF.Controller
     {
         const string AFOLDERNAME = "ClassA";
         const string BFOLDERNAME = "ClassB";
+        const string UNKNOWNFOLDERNAME = "Unknown";
 
         private FileLists _fileLists;
         private FileAdapter _fileAdapter;
@@ -40,6 +41,12 @@ namespace TextClassificationWPF.Controller
         {
             List<string> fileNames = _fileAdapter.GetAllFileNames(BFOLDERNAME);
             _fileLists.SetB(fileNames);
+        }
+
+        public override void GenerateFileNameInUnknown()
+        {
+            List<string> fileNames = _fileAdapter.GetAllFileNames(UNKNOWNFOLDERNAME);
+            _fileLists.SetU(fileNames);
         }
     }
 }

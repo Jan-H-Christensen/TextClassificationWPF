@@ -13,6 +13,8 @@ namespace TextClassificationWPF.Domain
 
         private List<string> _a;
 
+        private List<string> _u;
+
 
         public FileLists(){
 
@@ -27,6 +29,11 @@ namespace TextClassificationWPF.Domain
         {
             _b = b;
         }
+        public void SetU(List<string> u)
+        {
+            _u = u;
+        }
+
 
         public List<string> GetA()
         {
@@ -36,6 +43,11 @@ namespace TextClassificationWPF.Domain
         public List<string> GetB()
         {
             return _b;
+        }
+
+        public List<string> GetU()
+        {
+            return _u;
         }
 
         public List<string> GetBoth()

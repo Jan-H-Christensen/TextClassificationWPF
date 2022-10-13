@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using TextClassificationWPF.Business;
 using TextClassificationWPF.Domain;
 using TextClassificationWPF.FileIO;
+using TextClassificationWPF.Model;
 
 namespace TextClassificationWPF.Controller
 {
@@ -16,6 +17,7 @@ namespace TextClassificationWPF.Controller
         private FileLists _fileLists;
         private BagOfWords _bagOfWords;
         private Vectors _vectors;
+        private KNN _knn;
 
         private FileAdapter _fileAdapter;
 
@@ -23,6 +25,7 @@ namespace TextClassificationWPF.Controller
         {
             _fileAdapter = new TextFile("txt");
             _knowledge = new Knowledge();
+            _knn = new KNN();
         }
 
         public override void BuildFileLists()
@@ -33,6 +36,8 @@ namespace TextClassificationWPF.Controller
             flb.GenerateFileNamesInA();
 
             flb.GenerateFileNamesInB();
+
+            flb.GenerateFileNameInUnknown();
 
             _fileLists = flb.GetFileLists();
             _knowledge.SetFileLists(_fileLists);
@@ -92,8 +97,7 @@ namespace TextClassificationWPF.Controller
         private void AddToVectors(string folderName, VectorsBuilder vb)
         {
             List<string> list;
-            
-
+ 
             if (folderName.Equals("ClassA")){
                 list = _fileLists.GetA();
             }
@@ -103,6 +107,7 @@ namespace TextClassificationWPF.Controller
             for (int i = 0; i < list.Count; i++)
             {
                 List<bool> vector = new List<bool>();
+                List<double> vectorKnn = new List<double>();
                 foreach (string key in _bagOfWords.GetAllWordsInDictionary())
                 {
                     string text;
@@ -112,21 +117,26 @@ namespace TextClassificationWPF.Controller
                     else{
                         text = _fileAdapter.GetAllTextFromFileB(_fileLists.GetA()[i]);
                     }
+                    // needed for change unknown text to vector
                     List<string> wordsInFile = Tokenization.Tokenize(text);
                     if (wordsInFile.Contains(key)){
                         vector.Add(true);
+                        vectorKnn.Add(1);
                     }
                     else{
                         vector.Add(false);
+                        vectorKnn.Add(0);
                     }
                 }
                 if (folderName.Equals("ClassA"))
                 {
                     vb.AddVectorToA(vector);
+                    _knn.AddVectorToA(vectorKnn);
                 }
                 else
                 {
                     vb.AddVectorToB(vector);
+                    _knn.AddVectorToB(vectorKnn);
                 }
             }
         }
