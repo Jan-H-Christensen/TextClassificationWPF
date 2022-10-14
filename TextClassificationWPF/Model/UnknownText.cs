@@ -1,33 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TextClassificationWPF.Business;
+using TextClassificationWPF.Controller;
 using TextClassificationWPF.Domain;
-
+using TextClassificationWPF.Foundation;
 
 namespace TextClassificationWPF.Model
 {
     
-    class UnknownText
+    class UnknownText : Bindable
     {
+        int k = 3;
         private KNN knn;
         private BagOfWords _bagOfWords;
+        private Knowledge _knowledge;
+
+        private string fileName;
+
+        public string FileName
+        {
+            get { return fileName; }
+            set { fileName = value;
+                PropertyIsChanged();
+            }
+        }
+
         public string Text { get; set; }
         public string ClassifyAs { get; set; }
 
         private List<string> _words;
         private List<double> _vector;
 
-        public UnknownText()
+        public UnknownText(Knowledge knowledge)
         {
-            knn = new KNN();
-            _bagOfWords = new BagOfWords();
+            _knowledge = knowledge;
+            _bagOfWords = knowledge.GetBagOfWords();
+            _vector = new List<double>();
+            _words = new List<string>();
         }
 
         private void TokenizUnknownText()
         {
+            for (int i = 0; i < _knowledge.GetFileLists().GetU().Count; i++)
+            {
+                /**
+                 * Here we check the chosen file name to the file name int the list of pathes
+                 * If they mach we read the file and add it to a string
+                 */
+                if (FileName == StringOperations.getFileName(_knowledge.GetFileLists().GetU()[i]))
+                    Text = File.ReadAllText(_knowledge.GetFileLists().GetU()[i]);
+            }
+
             _words = Tokenization.Tokenize(Text);
             //foreach (string word in _words)
             //{
@@ -37,6 +64,7 @@ namespace TextClassificationWPF.Model
 
         private void CreateVector()
         {
+            _vector = new List<double>();
             foreach (string key in _bagOfWords.GetAllWordsInDictionary())
             {
                 List<string> wordsInFile = _words;
@@ -56,8 +84,6 @@ namespace TextClassificationWPF.Model
             TokenizUnknownText();
             CreateVector();
             ClassifyAs = IsNearestTo();
-
-
             return ClassifyAs;
         }
 
@@ -65,24 +91,26 @@ namespace TextClassificationWPF.Model
         {
             int countA = 0;
             int countB = 0;
-
+            knn = _knowledge.GetKnn();
             List<double> testA = knn.CalculateNearestNeighborInA(_vector);
+            testA.Sort();
             List<double> testB = knn.CalculateNearestNeighborInB(_vector);
+            testB.Sort();
             // TODo some code to find the k = 3, Reminder counter for classA and classB
-            Dictionary<double, int> findingK = new Dictionary<double, int>();
-            for (int i = 0; i < testA.Count; i++)
+            Dictionary<double, int> findingNearest = new Dictionary<double, int>();
+            for (int i = 0; i < k; i++)
             {
-                findingK.Add(testA[i], 0);
+                findingNearest.Add(testA[i], 0);
             }
-            for (int i = 0; i < testB.Count; i++)
+            for (int i = 0; i < k; i++)
             {
-                findingK.Add(testB[i], 1);
+                findingNearest.Add(testB[i], 1);
             }
 
-            while (countA + countB < 4)
+            while (countA + countB < k)
             {
-                double fistMin = findingK.Keys.Min();
-                if (findingK.Values.Equals(findingK.Keys.Min() == 0))
+                double fistMin = findingNearest.Keys.Min();       
+                if (findingNearest[fistMin] == 0)
                 {
                     countA++;
                 }
@@ -90,16 +118,16 @@ namespace TextClassificationWPF.Model
                 {
                     countB++;
                 }
-                findingK.Remove(fistMin);
+                findingNearest.Remove(fistMin);
             }
 
-            if (countA < countB)
+            if (countA > countB)
             {
-                return "ClassA";
+                return "Sport";
             }
             else
             {
-                return "ClassB";
+                return "Fairy Tale";
             }
                     
         }

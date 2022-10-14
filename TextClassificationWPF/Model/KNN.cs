@@ -12,7 +12,6 @@ namespace TextClassificationWPF.Model
     {
         private List<List<double>> _currentVectorlistA;
         private List<List<double>> _currentVectorListB;
-
         public KNN()
         {
             _currentVectorlistA = new List<List<double>>();
@@ -35,10 +34,12 @@ namespace TextClassificationWPF.Model
             double dis = 0;
             for (int i = 0; i < _currentVectorlistA.Count; i++)
             {
-                for (int j = 0; j < _currentVectorlistA[i].Count; j++)
+                List<double> calculation = _currentVectorlistA[i];                
+                for (int j = 0; j < calculation.Count; j++)
                 {
-                    dis = dis + Math.Sqrt(Math.Pow(_currentVectorlistA[i][j] - unknownText[j],2));
+                    dis += Math.Pow(calculation[j] - unknownText[j],2);
                 }
+                dis = Math.Sqrt(dis);
                 DisToTextInA.Add(dis);
             }
 
@@ -51,10 +52,12 @@ namespace TextClassificationWPF.Model
             double dis = 0;
             for (int i = 0; i < _currentVectorListB.Count; i++)
             {
-                for (int j = 0; j < _currentVectorListB[i].Count; j++)
+                List<double> calculation = _currentVectorListB[i];
+                for (int j = 0; j < calculation.Count; j++)
                 {
-                    dis = dis + Math.Sqrt(Math.Pow(_currentVectorListB[i][j] - unknownText[j], 2));
+                    dis +=Math.Pow(calculation[j] - unknownText[j], 2);
                 }
+                dis = Math.Sqrt(dis);
                 DisToTextInB.Add(dis);
             }
 

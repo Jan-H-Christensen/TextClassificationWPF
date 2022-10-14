@@ -218,7 +218,8 @@
                   Background="AliceBlue"
                   BorderBrush="Black"
                   BorderThickness="1"
-                  ItemsSource="{Binding ListUnknown}">
+                  ItemsSource="{Binding ListUnknown}"
+                  SelectedItem="{Binding Unknown.FileName}">
             <ListView.ItemContainerStyle>
                 <Style TargetType="{x:Type ListViewItem}">
                     <Setter Property="BorderBrush" Value="LightGray" />
@@ -239,6 +240,10 @@
                 Grid.ColumnSpan="2"
                 Grid.Row="12" 
                 Background="CornflowerBlue"
-                Command="{Binding ClassifyedAs}"></Button>
+                Command="{Binding Classify}"></Button>
+        <Label Content="{Binding ClassifyedAs}"
+               Grid.Row="12"
+               Grid.Column="8"
+               Background="CornflowerBlue"></Label>
     </Grid>
 </Window>

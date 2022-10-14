@@ -26,14 +26,18 @@ namespace TextClassificationWPF.ViewModel
         private Knowledge knowledge;
 
         private UnknownText unknownText;
-        //TODO bind to a Textfield in the WPF
+
         public UnknownText Unknown
         {
             get { return unknownText; }
-            set { unknownText = value;
+            set
+            {
+                unknownText = value;
                 PropertyIsChanged();
             }
         }
+
+
         private string filename;
         public string Filename
         {
@@ -69,7 +73,9 @@ namespace TextClassificationWPF.ViewModel
         public string ClassifyedAs
         {
             get { return classifyedAs; }
-            set { classifyedAs = value; }
+            set { classifyedAs = value;
+                PropertyIsChanged();
+            }
         }
 
 
@@ -130,11 +136,13 @@ namespace TextClassificationWPF.ViewModel
         
         public KnowledgeViewModel()
         {
+            
             kb = new KnowledgeBuilder();
             // initiate the learning process
             kb.Train();
             // getting the (whole) knowledge found in ClassA and in ClassB
             knowledge = kb.GetKnowledge();
+            unknownText = new UnknownText(knowledge);
             // get a part of the knowledge - here just for debugging
             bagOfWords = knowledge.GetBagOfWords();
             GetFileNames();

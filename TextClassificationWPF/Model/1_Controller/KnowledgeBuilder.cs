@@ -13,10 +13,11 @@ namespace TextClassificationWPF.Controller
     public class KnowledgeBuilder:AbstractKnowledgeBuilder
     {
         private Knowledge _knowledge; // the composite object
-
+        
         private FileLists _fileLists;
         private BagOfWords _bagOfWords;
         private Vectors _vectors;
+
         private KNN _knn;
 
         private FileAdapter _fileAdapter;
@@ -25,7 +26,6 @@ namespace TextClassificationWPF.Controller
         {
             _fileAdapter = new TextFile("txt");
             _knowledge = new Knowledge();
-            _knn = new KNN();
         }
 
         public override void BuildFileLists()
@@ -94,7 +94,7 @@ namespace TextClassificationWPF.Controller
             _knowledge.SetBagOfWords(_bagOfWords);
         }
 
-        private void AddToVectors(string folderName, VectorsBuilder vb)
+        private void AddToVectors(string folderName, VectorsBuilder vb, KNN knn)
         {
             List<string> list;
  
@@ -108,17 +108,17 @@ namespace TextClassificationWPF.Controller
             {
                 List<bool> vector = new List<bool>();
                 List<double> vectorKnn = new List<double>();
+                string text;
+                if (folderName.Equals("ClassA")){
+                    text = _fileAdapter.GetAllTextFromFileA(_fileLists.GetA()[i]);
+                }
+                else{
+                    text = _fileAdapter.GetAllTextFromFileB(_fileLists.GetB()[i]);
+                }
+                List<string> wordsInFile = Tokenization.Tokenize(text);
                 foreach (string key in _bagOfWords.GetAllWordsInDictionary())
                 {
-                    string text;
-                    if (folderName.Equals("ClassA")){
-                        text = _fileAdapter.GetAllTextFromFileA(_fileLists.GetA()[i]);
-                    }
-                    else{
-                        text = _fileAdapter.GetAllTextFromFileB(_fileLists.GetA()[i]);
-                    }
                     // needed for change unknown text to vector
-                    List<string> wordsInFile = Tokenization.Tokenize(text);
                     if (wordsInFile.Contains(key)){
                         vector.Add(true);
                         vectorKnn.Add(1);
@@ -131,12 +131,12 @@ namespace TextClassificationWPF.Controller
                 if (folderName.Equals("ClassA"))
                 {
                     vb.AddVectorToA(vector);
-                    _knn.AddVectorToA(vectorKnn);
+                    knn.AddVectorToA(vectorKnn);
                 }
                 else
                 {
                     vb.AddVectorToB(vector);
-                    _knn.AddVectorToB(vectorKnn);
+                    knn.AddVectorToB(vectorKnn);
                 }
             }
         }
@@ -152,10 +152,12 @@ namespace TextClassificationWPF.Controller
                 BuildBagOfWords();
             }
             _vectors = new Vectors();
-            VectorsBuilder vb = new VectorsBuilder();
-            AddToVectors("ClassA",vb);
-            AddToVectors("ClassB",vb);
 
+            VectorsBuilder vb = new VectorsBuilder();
+            _knn = new KNN();
+            AddToVectors("ClassA",vb,_knn);
+            AddToVectors("ClassB",vb,_knn);
+            _knowledge.SetKnn(_knn);
             _vectors = vb.GetVectors();
             _knowledge.SetVectors(_vectors);
         }

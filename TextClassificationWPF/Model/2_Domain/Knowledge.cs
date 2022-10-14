@@ -13,6 +13,7 @@ namespace TextClassificationWPF.Domain
         private FileLists _fileLists;
         private BagOfWords _bagOfWords;
         private Vectors _vectors;
+        private KNN _knn;
         public Knowledge()
         {
 
@@ -29,6 +30,12 @@ namespace TextClassificationWPF.Domain
         {
             return _vectors;
         }
+
+        public KNN GetKnn()
+        {
+            return _knn;
+        }
+
         public void SetFileLists(FileLists fileLists)
         {
             _fileLists = fileLists;
@@ -40,6 +47,11 @@ namespace TextClassificationWPF.Domain
         public void SetVectors(Vectors vectors)
         {
             _vectors = vectors;
+        }
+
+        public void SetKnn(KNN knn)
+        {
+            _knn = knn;
         }
     }
 }
