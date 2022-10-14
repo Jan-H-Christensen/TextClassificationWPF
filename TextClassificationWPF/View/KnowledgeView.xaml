@@ -212,7 +212,7 @@
                  BorderThickness="1"></Label>
         <ListView x:Name="ListOfUnkownTexts"
                   Grid.Row="1"
-                  Grid.RowSpan="11"
+                  Grid.RowSpan="10"
                   Grid.Column="10"
                   Grid.ColumnSpan="2"
                   Background="AliceBlue"
@@ -238,12 +238,16 @@
                 Content="Classify"
                 Grid.Column="10"
                 Grid.ColumnSpan="2"
-                Grid.Row="12" 
+                Grid.Row="11" 
                 Background="CornflowerBlue"
                 Command="{Binding Classify}"></Button>
         <Label Content="{Binding ClassifyedAs}"
                Grid.Row="12"
-               Grid.Column="8"
-               Background="CornflowerBlue"></Label>
+               Grid.Column="10"
+               Grid.ColumnSpan="2"
+               Background="LightGoldenrodYellow"
+               HorizontalContentAlignment="Center"
+               BorderBrush="Black"
+               BorderThickness="1"></Label>
     </Grid>
 </Window>
