@@ -42,7 +42,7 @@ namespace TextClassificationWPF.Controller
             List<string> fileNames = _fileAdapter.GetAllFileNames(BFOLDERNAME);
             _fileLists.SetB(fileNames);
         }
-
+        // Added so i can get the filename for all unknown texts in the folder
         public override void GenerateFileNameInUnknown()
         {
             List<string> fileNames = _fileAdapter.GetAllFileNames(UNKNOWNFOLDERNAME);

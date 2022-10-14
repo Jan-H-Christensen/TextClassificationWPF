@@ -94,7 +94,7 @@ namespace TextClassificationWPF.Controller
             _knowledge.SetBagOfWords(_bagOfWords);
         }
 
-        private void AddToVectors(string folderName, VectorsBuilder vb, KNN knn)
+        private void AddToVectors(string folderName, VectorsBuilder vb, KNN knn) 
         {
             List<string> list;
  
@@ -118,20 +118,19 @@ namespace TextClassificationWPF.Controller
                 List<string> wordsInFile = Tokenization.Tokenize(text);
                 foreach (string key in _bagOfWords.GetAllWordsInDictionary())
                 {
-                    // needed for change unknown text to vector
                     if (wordsInFile.Contains(key)){
                         vector.Add(true);
-                        vectorKnn.Add(1);
+                        vectorKnn.Add(1); 
                     }
                     else{
                         vector.Add(false);
-                        vectorKnn.Add(0);
+                        vectorKnn.Add(0); 
                     }
                 }
                 if (folderName.Equals("ClassA"))
                 {
                     vb.AddVectorToA(vector);
-                    knn.AddVectorToA(vectorKnn);
+                    knn.AddVectorToA(vectorKnn); 
                 }
                 else
                 {
@@ -154,10 +153,10 @@ namespace TextClassificationWPF.Controller
             _vectors = new Vectors();
 
             VectorsBuilder vb = new VectorsBuilder();
-            _knn = new KNN();
-            AddToVectors("ClassA",vb,_knn);
-            AddToVectors("ClassB",vb,_knn);
-            _knowledge.SetKnn(_knn);
+            _knn = new KNN(); // added so i can use the created KNN object                 
+            AddToVectors("ClassA",vb,_knn); // added so i hav 0 and 1 i can use for the KNN 
+            AddToVectors("ClassB",vb,_knn); // added so i hav 0 and 1 i can use for the KNN 
+            _knowledge.SetKnn(_knn); // her im storing it in our knowleg class so i can use it late on
             _vectors = vb.GetVectors();
             _knowledge.SetVectors(_vectors);
         }

@@ -27,7 +27,9 @@ namespace TextClassificationWPF.Model
         {
             _currentVectorListB.Add(vector);
         }
-
+        /*
+         * calculates the distence to every vector from each file in class A
+         */
         public List<double> CalculateNearestNeighborInA(List<double> unknownText)
         {
             List<double> DisToTextInA = new List<double>();
@@ -46,6 +48,9 @@ namespace TextClassificationWPF.Model
             return DisToTextInA;
         }
 
+        /*
+         * calculates the distence to every vector from each file in class B
+         */
         public List<double> CalculateNearestNeighborInB(List<double> unknownText)
         {
             List<double> DisToTextInB = new List<double>();

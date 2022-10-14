@@ -55,9 +55,7 @@ namespace TextClassificationWPF.ViewModel
                 PropertyIsChanged();
             }
         }
-
         private string searchWord;
-
         public string SearchWord
         {
             get { return searchWord; }
@@ -67,9 +65,7 @@ namespace TextClassificationWPF.ViewModel
                 PropertyIsChanged();
             }
         }
-
         private string classifyedAs;
-        //TODO bind to a label in the WPF
         public string ClassifyedAs
         {
             get { return classifyedAs; }
@@ -78,9 +74,7 @@ namespace TextClassificationWPF.ViewModel
             }
         }
 
-
         private WordItem wordItem;
-
         public WordItem WordItem
         {
             get { return wordItem; }
@@ -90,7 +84,6 @@ namespace TextClassificationWPF.ViewModel
         }
 
         private ObservableCollection<string> listClassA = new ObservableCollection<string>();
-
         public ObservableCollection<string> ListClassA
         {
             get { return listClassA; }
@@ -101,7 +94,6 @@ namespace TextClassificationWPF.ViewModel
             }
         }
         private ObservableCollection<string> listClassB = new ObservableCollection<string>();
-
         public ObservableCollection<string> ListClassB
         {
             get { return listClassB; }
@@ -113,7 +105,6 @@ namespace TextClassificationWPF.ViewModel
         }
 
         private ObservableCollection<string> listUnknown = new ObservableCollection<string>();
-
         public ObservableCollection<string> ListUnknown
         {
             get { return listUnknown; }
@@ -123,17 +114,14 @@ namespace TextClassificationWPF.ViewModel
                 PropertyIsChanged();
             }
         }
-
-        private ObservableCollection<WordItem> listOfWordItems = new ObservableCollection<WordItem>();
-        
+        private ObservableCollection<WordItem> listOfWordItems = new ObservableCollection<WordItem>();      
         public ObservableCollection<WordItem> ListOfWordItems
         {
             get { return listOfWordItems; }
             set { listOfWordItems = value;
                 PropertyIsChanged();
             }
-        }
-        
+        }      
         public KnowledgeViewModel()
         {
             
@@ -279,7 +267,7 @@ namespace TextClassificationWPF.ViewModel
             ListOfWordItems = new ObservableCollection<WordItem>(bagOfWords.GetEntriesInDictionary());
         }
 
-        //should do the magic later maybe some changes in the code behind (KNN class and UnknownTextClass)
+        // is classifying the choosen text fram a list by pressing a button
         private void ClassifyAnUnknownText(object parameter)
         {
             ClassifyedAs = unknownText.ClassifyUnknownText();

@@ -43,25 +43,23 @@ namespace TextClassificationWPF.Model
             _words = new List<string>();
         }
 
+        /*
+         * is tokonizing the text from the selctied file and storing it in a list of words
+         */
         private void TokenizUnknownText()
         {
             for (int i = 0; i < _knowledge.GetFileLists().GetU().Count; i++)
             {
-                /**
-                 * Here we check the chosen file name to the file name int the list of pathes
-                 * If they mach we read the file and add it to a string
-                 */
                 if (FileName == StringOperations.getFileName(_knowledge.GetFileLists().GetU()[i]))
                     Text = File.ReadAllText(_knowledge.GetFileLists().GetU()[i]);
             }
 
             _words = Tokenization.Tokenize(Text);
-            //foreach (string word in _words)
-            //{
-            //    _bagOfWords.InsertEntry(word);
-            //}
         }
 
+        /*
+         * is creating the vector for the selectet file and storing it in a list of vectors
+         */
         private void CreateVector()
         {
             _vector = new List<double>();
@@ -79,6 +77,9 @@ namespace TextClassificationWPF.Model
             }
         }
 
+        /*
+         * is the method witch will be executen by button pressed
+         */
         public string ClassifyUnknownText()
         {
             TokenizUnknownText();
@@ -87,6 +88,9 @@ namespace TextClassificationWPF.Model
             return ClassifyAs;
         }
 
+        /* creates a list of the 5 nearest from classA and B will be stored in a dectionary, chooses the three smallest
+         * and counts if it was a classA or B
+        */ 
         private string IsNearestTo()
         {
             int countA = 0;
